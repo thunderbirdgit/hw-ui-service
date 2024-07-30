@@ -1,0 +1,31 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: hello-world-ui
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: hello-world-ui
+  template:
+    metadata:
+      labels:
+        app: hello-world-ui
+    spec:
+      containers:
+      - name: hello-world-ui
+        image: us-central1-docker.pkg.dev/nonprod-app-cluster/nonprod/hello-world-ui-ab12n1c-develop:latest
+        ports:
+        - containerPort: 3000
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: hello-world-ui-service
+spec:
+  type: LoadBalancer
+  ports:
+  - port: 80
+    targetPort: 3000
+  selector:
+    app: hello-world-ui
