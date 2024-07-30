@@ -10,7 +10,7 @@ const client = new SecretManagerServiceClient();
 
 async function getDbCredentials() {
   const [version] = await client.accessSecretVersion({
-    name: 'projects/YOUR_PROJECT_ID/secrets/my-postgres-password/versions/latest',
+    name: 'projects/nonprod-app-cluster/secrets/dev_api_db_creds/versions/latest',
   });
   const password = version.payload.data.toString('utf8');
   return password;
@@ -20,7 +20,7 @@ async function getDbCredentials() {
   const password = await getDbCredentials();
   const pool = new Pool({
     user: 'dev_api_db_creds',
-    host: '104.198.20.225',  // Replace with your instance IP
+    host: '104.198.20.225', 
     database: 'hello_world_db',
     password: password,
     port: 5432,

@@ -53,7 +53,7 @@ buildNumber.properties
 !**/src/main/**
 !**/src/test/**
 .mtj.tmp/
-
+*key.json
 # Log
 *.log
 

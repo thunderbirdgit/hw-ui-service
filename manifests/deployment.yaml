@@ -14,9 +14,11 @@ spec:
     spec:
       containers:
       - name: hello-world-ui
-        image: us-central1-docker.pkg.dev/nonprod-app-cluster/nonprod/hello-world-ui-ab12n1c-develop:latest
+        image: us-central1-docker.pkg.dev/nonprod-app-cluster/nonprod/hello-world-ui-ab12n1d-develop:latest
         ports:
         - containerPort: 3000
+      imagePullSecrets:
+      - name: regcred
 ---
 apiVersion: v1
 kind: Service
