@@ -1,0 +1,13 @@
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: hello-world-ui
+  labels:
+    service: hello-world-ui
+spec:
+  selector:
+    app: hello-world-ui
+  type: LoadBalancer
+  ports:
+    - port: 3080

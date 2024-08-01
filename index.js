@@ -1,37 +1,50 @@
 const express = require('express');
 const { Pool } = require('pg');
-const { SecretManagerServiceClient } = require('@google-cloud/secret-manager');
 
 const app = express();
-const port = process.env.PORT || 3000;
+const port = process.env.PORT || 3080;
 
-// Initialize Secret Manager client
-const client = new SecretManagerServiceClient();
+/*
+// Retrieve database credentials from environment variables
+const pool = new Pool({
+  host: '104.198.20.225',
+  port: 5432,
+  user: 'dev_api_db_creds',
+  password: 'idmepostgressqlpw',
+  database: 'hello_world_db',
+});
+*/
 
-async function getDbCredentials() {
-  const [version] = await client.accessSecretVersion({
-    name: 'projects/nonprod-app-cluster/secrets/dev_api_db_creds/versions/latest',
-  });
-  const password = version.payload.data.toString('utf8');
-  return password;
+// Retrieve database credentials from environment variables
+const pool = new Pool({
+  host: process.env.DB_HOST,
+  port: process.env.DB_PORT,
+  user: process.env.DB_USER,
+  password: process.env.DB_PASSWORD,
+  database: process.env.DB_NAME,
+});
+
+/*
+// Function to query the database
+async function queryTable(tableName) {
+  try {
+    const result = await pool.query(`SELECT * FROM ${tableName}`);
+    console.log(result.rows);
+  } catch (err) {
+    console.error('Error querying the table:', err);
+  }
 }
 
-(async () => {
-  const password = await getDbCredentials();
-  const pool = new Pool({
-    user: 'dev_api_db_creds',
-    host: '104.198.20.225', 
-    database: 'hello_world_db',
-    password: password,
-    port: 5432,
-  });
+// Example usage
+queryTable('messages'); // Replace with your table name
+*/
 
-  app.get('/', async (req, res) => {
-    const result = await pool.query('SELECT message FROM greetings LIMIT 1');
-    res.send(result.rows[0].message || 'Hello World');
-  });
+app.get('/', async (req, res) => {
+    const result = await pool.query('SELECT * FROM messages');
+    //res.send(result.rows[0].message);
+    res.send(result.rows);
+});
 
-  app.listen(port, () => {
-    console.log(`Server running at http://localhost:${port}`);
-  });
-})();
+app.listen(port, () => {
+    console.log(`Node.js app listening at http://localhost:${port}`);
+});
