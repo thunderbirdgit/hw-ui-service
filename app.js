@@ -4,8 +4,8 @@ const { Pool } = require('pg');
 const client = new SecretManagerServiceClient();
 
 async function getDbCredentials() {
-  const projectId = 'nonprod-app-cluster'; // Replace with your GCP project ID
-  const secretName = 'test_creds'; // Replace with your secret name
+  const projectId = 'nonprod-app-cluster';
+  const secretName = 'dev_api_db_creds';
 
   const name = `projects/${projectId}/secrets/${secretName}/versions/latest`;
 
@@ -39,7 +39,7 @@ async function queryTable(tableName) {
   } catch (err) {
     console.error('Error querying the table:', err);
   } finally {
-    await pool.end(); // Close the connection pool
+    await pool.end();
   }
 }
 

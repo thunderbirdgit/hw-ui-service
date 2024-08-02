@@ -1,16 +1,19 @@
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: hello-world-ui-ingress
+  name: hello-world-ui
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /
 spec:
+  ingressClassName: nginx
   rules:
-    - host: idme-helloworld.com  # Replace with your domain
+    - host: dev.helloworld.com
       http:
         paths:
           - path: /
             pathType: Prefix
             backend:
               service:
-                name: hello-world-ui-service
+                name: hello-world-ui
                 port:
-                  number: 80
+                  number: 3080
