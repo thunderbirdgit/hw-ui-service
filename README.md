@@ -71,29 +71,34 @@ Prepare Kubernetes manifests for deployment:
 Apply the manifest files to create the deployment, service, Ingress, ServiceMonitor, and other resources: `kubectl apply -f manifests/`
     
 ### 11. Deploy Ingress Controller
-    <img width="772" alt="image" src="https://github.com/user-attachments/assets/be191d3a-cd3c-4e45-b7b2-b989ac74e8b3">
+
+<img width="772" alt="image" src="https://github.com/user-attachments/assets/be191d3a-cd3c-4e45-b7b2-b989ac74e8b3">
 
 ### 12. Verify Pods, Service, and Ingress
 Ensure that the services are using LoadBalancer instead of ClusterIP to enable traffic routing through the Ingress Controller.
-    <img width="733" alt="image" src="https://github.com/user-attachments/assets/2bda5dcf-d324-4772-9c87-788c2c854b25">
 
-    <img width="975" alt="image" src="https://github.com/user-attachments/assets/c4678a47-cece-4ba2-88de-3cdb0f376d9d">
+<img width="733" alt="image" src="https://github.com/user-attachments/assets/2bda5dcf-d324-4772-9c87-788c2c854b25">
 
-    <img width="684" alt="image" src="https://github.com/user-attachments/assets/c7ba6e70-02e3-4c85-b0d6-2fda634301d5">
+<img width="975" alt="image" src="https://github.com/user-attachments/assets/c4678a47-cece-4ba2-88de-3cdb0f376d9d">
+
+<img width="684" alt="image" src="https://github.com/user-attachments/assets/c7ba6e70-02e3-4c85-b0d6-2fda634301d5">
 
 ### 13. Access the Application
 In real world, dev.helloworld.com will be registered through the Domain registration providers. For the purposes of this exercise, modify the `/etc/hosts` file on your laptop or other device to access `http://dev.helloworld.com` through Ingress IP. 
-    <img width="356" alt="image" src="https://github.com/user-attachments/assets/48c038b1-85f8-4bb4-8222-bb99d4994378">
 
-    <img width="424" alt="image" src="https://github.com/user-attachments/assets/6f2871e4-fba1-4f1b-88e9-90b5b2606cce">
+ <img width="356" alt="image" src="https://github.com/user-attachments/assets/48c038b1-85f8-4bb4-8222-bb99d4994378">
+
+ <img width="424" alt="image" src="https://github.com/user-attachments/assets/6f2871e4-fba1-4f1b-88e9-90b5b2606cce">
 
 ### 14. Monitor Ingress Logs
 Ingress access logs can be accessed by running `kubectl logs -f <ingress_controller> --namespace ingress-nginx`
-    <img width="785" alt="image" src="https://github.com/user-attachments/assets/acafb9e3-899f-4a04-9fd1-9365bdf5ab25">
+    
+<img width="785" alt="image" src="https://github.com/user-attachments/assets/acafb9e3-899f-4a04-9fd1-9365bdf5ab25">
 
 ### 15. Access Node.js Application Metrics
 Metrics can be accessed from the /metrics endpoint of your application. This data can be integrated with Prometheus and Grafana for monitoring and analytics.
-    <img width="779" alt="image" src="https://github.com/user-attachments/assets/c397797b-2ee3-42f9-be69-32c416926d00">
+
+<img width="779" alt="image" src="https://github.com/user-attachments/assets/c397797b-2ee3-42f9-be69-32c416926d00">
 
 ### 16. Install Prometheus
 Install Prometheus using Helm:
@@ -109,7 +114,8 @@ helm upgrade prometheus prometheus-community/prometheus -f values.yaml
     
 ### 17. Access Prometheus
 Prometheus can be accessed from the LoadBalancer IP.
-    <img width="964" alt="image" src="https://github.com/user-attachments/assets/36ac33da-06a7-4e9b-a88c-db5bd783de82">
+
+<img width="964" alt="image" src="https://github.com/user-attachments/assets/36ac33da-06a7-4e9b-a88c-db5bd783de82">
 
 ### 18. Update Prometheus Scrape Configurations
 Add scrape configurations to values.yaml and restart Prometheus to scrape metrics from the hello-world-fe service:
@@ -128,10 +134,11 @@ helm upgrade prometheus prometheus-community/prometheus -f values.yaml
 kubectl rollout restart deployment prometheus-server
 ```
     
-    <img width="1119" alt="image" src="https://github.com/user-attachments/assets/31e891e4-937b-4d03-a90a-5787897f841a">
+<img width="1119" alt="image" src="https://github.com/user-attachments/assets/31e891e4-937b-4d03-a90a-5787897f841a">
 
-    Display HTTP Requests Total
-    <img width="1408" alt="image" src="https://github.com/user-attachments/assets/c53cf186-d0c5-484c-a288-d4f0cda6ad6a">
+ Display HTTP Requests Total
+ 
+ <img width="1408" alt="image" src="https://github.com/user-attachments/assets/c53cf186-d0c5-484c-a288-d4f0cda6ad6a">
 
 Although Promotheus can be used for monitoring and alerting, Grafana can be the best tool for data visualization. Data from Prometheus can be used as a data source for Grafana to create dashboards
 
@@ -147,13 +154,13 @@ helm upgrade grafana grafana/grafana -f values.yaml
     
 20. Access Grafana
 Grafana can be accessed from the LoadBalancer IP. Add Prometheus as a data source and configure dashboards.
-    <img width="739" alt="image" src="https://github.com/user-attachments/assets/464923f8-e1d1-439c-8517-d2435756eb3a">
+<img width="739" alt="image" src="https://github.com/user-attachments/assets/464923f8-e1d1-439c-8517-d2435756eb3a">
 
-    <img width="763" alt="image" src="https://github.com/user-attachments/assets/64c4bf4c-6cac-4562-82d3-aa287a05c67a">
-    
-    <img width="716" alt="image" src="https://github.com/user-attachments/assets/9796b1b9-4962-4d87-98cf-333f4d370c8f">
+<img width="763" alt="image" src="https://github.com/user-attachments/assets/64c4bf4c-6cac-4562-82d3-aa287a05c67a">
 
-    <img width="752" alt="image" src="https://github.com/user-attachments/assets/0f6c0a2f-dd89-4fe6-87d6-ff406baf185e">
+<img width="716" alt="image" src="https://github.com/user-attachments/assets/9796b1b9-4962-4d87-98cf-333f4d370c8f">
+
+<img width="752" alt="image" src="https://github.com/user-attachments/assets/0f6c0a2f-dd89-4fe6-87d6-ff406baf185e">
 
 ### 21. Verify All Pods
 Ensure all pods are healthy:
@@ -182,6 +189,7 @@ Now Grafana is ready to display dashboards with visualizations based on the metr
 # 3. Add Prometheus as a data source
 # 4. Create panels for different metrics
 ```
-    <img width="554" alt="image" src="https://github.com/user-attachments/assets/49395306-7d98-49e7-8869-73e979493083">
+
+<img width="554" alt="image" src="https://github.com/user-attachments/assets/49395306-7d98-49e7-8869-73e979493083">
 
 
