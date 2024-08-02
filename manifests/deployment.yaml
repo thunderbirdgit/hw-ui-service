@@ -1,21 +1,21 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: hello-world-ui
+  name: hello-world-fe
   labels:
-    name: hello-world-ui
+    name: hello-world-fe
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: hello-world-ui
+      app: hello-world-fe
   template:
     metadata:
       labels:
-        app: hello-world-ui
+        app: hello-world-fe
     spec:
       containers:
-      - name: hello-world-ui
+      - name: hello-world-fe
         image: us-central1-docker.pkg.dev/nonprod-app-cluster/nonprod/hw-test-ab12n1o-develop:latest
         env:
         - name: NODE_ENV
