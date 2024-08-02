@@ -17,6 +17,9 @@ spec:
       containers:
       - name: hello-world-fe
         image: us-central1-docker.pkg.dev/nonprod-app-cluster/nonprod/hw-test-ab12n1o-develop:latest
+        ports:
+        - containerPort: 3080
+        - containerPort: 3081
         env:
         - name: NODE_ENV
           value: "development"

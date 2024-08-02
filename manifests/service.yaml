@@ -9,5 +9,9 @@ spec:
     app: hello-world-fe
   type: LoadBalancer
   ports:
-    - port: 3080
+    - name: http
+      port: 3080
       targetPort: 3080
+    - name: metrics
+      port: 3081
+      targetPort: 3081

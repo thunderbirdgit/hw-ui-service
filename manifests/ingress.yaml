@@ -17,3 +17,10 @@ spec:
                 name: hello-world-fe
                 port:
                   number: 3080
+          - path: /metrics
+            pathType: Prefix
+            backend:
+              service:
+                name: hello-world-fe
+                port:
+                  number: 3081
