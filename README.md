@@ -232,6 +232,12 @@ Now Grafana is ready to display dashboards with visualizations based on the metr
 
 <img width="554" alt="image" src="https://github.com/user-attachments/assets/49395306-7d98-49e7-8869-73e979493083">
 
+### Cleanup
+```
+kubectl delete service hello-world-fe 
+kubectl delete ingress hello-world-fe
+kubectl delete deployment hello-world-fe
+```
 
 ## Lessons Learned
 - Effective Containerization: Docker streamlined the deployment process, making it easy to manage and deploy the application consistently.
