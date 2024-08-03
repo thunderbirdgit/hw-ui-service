@@ -10,23 +10,37 @@ The Hello World UI service project is designed to deploy a Node.js web applicati
 - **Enable Monitoring:** Implement Prometheus and Grafana for monitoring application metrics and visualizing data.
 - **Secure Access:** Configure Kubernetes secrets for database credentials and Docker image access.
 
-## Components
-#### Google Cloud Platform (GCP):
-- Google Kubernetes Engine (GKE): Hosts and manages the Node.js application and monitoring tools.
-- Google Artifact Registry (GAR): Stores Docker images used for deploying the Node.js application.
-#### Docker:
-- Containerization: Packages the Node.js application into a Docker image for consistent deployment.
-#### Kubernetes:
-- Deployment: Manages application deployments, including scaling and rolling updates.
-- Service: Exposes the application to external traffic and internal components.
-- Ingress: Routes external traffic to the application, configured for domain-based access.
-#### Prometheus:
-- Monitoring: Collects and stores metrics from the Node.js application and other services.
-- Service Monitor: Configured to scrape metrics from application endpoints.
-#### Grafana:
-- Visualization: Provides dashboards for visualizing metrics collected by Prometheus.
-#### Helm:
-- Package Management: Simplifies the deployment of Prometheus and Grafana with pre-defined configurations.
+## Tool Decisions
+#### Docker
+- Reason for Choice: Docker is used for containerizing the Node.js application, ensuring consistent deployment across different environments.
+- Advantages:
+   - Encapsulates application dependencies and environment.
+   - Facilitates reproducible builds and deployment.
+#### Google Artifact Registry (GAR)
+- Reason for Choice: GAR is used to store and manage Docker images securely.
+- Advantages:
+   - Integration with GCP services for seamless authentication and authorization.
+   - Supports immutable tags to prevent overwriting of images.
+#### Google Kubernetes Engine (GKE)
+- Reason for Choice: GKE provides a managed Kubernetes environment, simplifying the deployment and scaling of containerized applications.
+- Advantages:
+   - Managed Kubernetes service with automated updates and scaling.
+   - Integration with GCP’s security, logging, and monitoring services.
+#### Prometheus
+- Reason for Choice: Prometheus is used for collecting and storing metrics from the Node.js application and Kubernetes components.
+- Advantages:
+   - Powerful querying language (PromQL) for metric analysis.
+   - Integration with Kubernetes for service discovery and monitoring.
+#### Grafana
+- Reason for Choice: Grafana provides a flexible platform for visualizing metrics from Prometheus.
+- Advantages:
+   - Customizable dashboards for visualizing a wide range of metrics.
+   - Supports various data sources, including Prometheus.
+#### Helm
+- Reason for Choice: Helm is used for managing Kubernetes applications, making it easier to deploy and configure Prometheus and Grafana.
+- Advantages:
+   - Simplifies the management of Kubernetes resources with pre-configured charts.
+   - Facilitates version control and updates.
 
 ## Setup Instructions
 
