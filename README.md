@@ -42,6 +42,10 @@ The Hello World UI service project is designed to deploy a Node.js web applicati
    - Simplifies the management of Kubernetes resources with pre-configured charts.
    - Facilitates version control and updates.
 
+## Architecture Diagram
+
+<img width="1033" alt="image" src="https://github.com/user-attachments/assets/53c21b25-4494-46b0-83c3-f8196166a8f7">
+
 ## Setup Instructions
 
 ### 1. Clone the Repository
@@ -126,7 +130,7 @@ Ensure that the services are using LoadBalancer instead of ClusterIP to enable t
 ### 13. Access the Application
 In real world, dev.helloworld.com will be registered through the Domain registration providers. For the purposes of this exercise, modify the `/etc/hosts` file on your laptop or other device to access `http://dev.helloworld.com` through Ingress IP. 
 
- <img width="356" alt="image" src="https://github.com/user-attachments/assets/48c038b1-85f8-4bb4-8222-bb99d4994378">
+<img width="345" alt="image" src="https://github.com/user-attachments/assets/b56530fb-7bd2-469a-8579-0357389e7e20">
 
  <img width="424" alt="image" src="https://github.com/user-attachments/assets/6f2871e4-fba1-4f1b-88e9-90b5b2606cce">
 
