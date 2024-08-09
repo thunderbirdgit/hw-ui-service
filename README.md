@@ -111,8 +111,16 @@ Prepare Kubernetes manifests for deployment:
 - prometheus/: Contains Prometheus monitoring server installation files with configurations for LoadBalancer and scrape_configs.
 - grafana/: Contains Grafana monitoring dashboard installation files with LoadBalancer configuration.
 
-### 10. Deploy Kubernetes Manifests
-Apply the manifest files to create the deployment, service, Ingress, ServiceMonitor, and other resources: `kubectl apply -f manifests/`
+### 10. Connect and deploy to Kubernetes Manifests
+
+- Connect to Kubernetes dev cluster 
+```
+gcloud container clusters get-credentials dev-gke-cluster --region=us-central1
+Fetching cluster endpoint and auth data.
+kubeconfig entry generated for dev-gke-cluster.
+```
+
+- Apply the manifest files to create the deployment, service, Ingress, ServiceMonitor, and other resources: `kubectl apply -f manifests/`
     
 ### 11. Deploy Ingress Controller
 
