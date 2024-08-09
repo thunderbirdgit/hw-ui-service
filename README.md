@@ -95,6 +95,43 @@ Generate a key for the service account and create a Kubernetes secret for Docker
  $ gcloud projects add-iam-policy-binding nonprod-app-cluster --member="serviceAccount:app-docker-image-puller@nonprod-app-cluster.iam.gserviceaccount.com" --role="roles/secretmanager.secretAccessor"
  ```
 
+### 8.1 Connect and Create Postgres Database
+- Create VPC Peering to connect to postgres database. Since postgres DB is installed on a different VPC network, you need to connect GKE cluster with postgres DB cluster
+```
+gcloud services enable servicenetworking.googleapis.com servicemanagement.googleapis.com iamcredentials.googleapis.com
+gcloud compute addresses create cloudsql-peer --global --purpose=VPC_PEERING --prefix-length=16 --description="Peering range for Cloud SQL" --network=default --project=<gke_project_id>
+gcloud sql connect <db_host>
+```
+- Connect to default postgres database
+```
+psql "host=db_host port=5432 sslmode=disable user=dev_api_db_creds dbname=postgres"
+Password for user dev_api_db_creds: 
+psql (16.3 (Ubuntu 16.3-1.pgdg22.04+1), server 14.12)
+Type "help" for help.
+
+postgres=>
+```
+- Create hello_world_db database, messages table and insert record into the database
+```
+postgres=> \c hello_world_db;
+psql (16.3 (Ubuntu 16.3-1.pgdg22.04+1), server 14.12)
+You are now connected to database "hello_world_db" as user "dev_api_db_creds".
+hello_world_db=> CREATE TABLE messages (
+    id SERIAL PRIMARY KEY,
+    message TEXT NOT NULL
+);
+CREATE TABLE
+
+hello_world_db=> INSERT INTO messages (message) VALUES ('Hello World');
+INSERT 0 1
+
+hello_world_db=> SELECT * FROM messages;
+ id |   message   
+----+-------------
+  1 | Hello World
+(1 row)
+```
+
 ### 8. Create Database Credentials for Dev Environment
 Store database credentials in Kubernetes secrets for runtime access:
 ```
@@ -112,7 +149,6 @@ Prepare Kubernetes manifests for deployment:
 - grafana/: Contains Grafana monitoring dashboard installation files with LoadBalancer configuration.
 
 ### 10. Connect and deploy to Kubernetes Manifests
-
 - Connect to Kubernetes dev cluster 
 ```
 gcloud container clusters get-credentials dev-gke-cluster --region=us-central1
