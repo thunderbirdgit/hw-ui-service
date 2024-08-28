@@ -1,0 +1,25 @@
+name: Perform Precommit Steps
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+env:
+  service_name: "hw-ui-service"
+    
+jobs:
+  get-short-sha:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Show Short Git SHA
+        run: echo "short_sha=$(echo ${{ github.sha }} | cut -c1-7)" >> $GITHUB_ENV
+        
+  build:
+    needs: get-short-sha
+    uses: thunderbirdgit/gh-actions-wf/ci/nodejs-build.yaml@main
+    with:
+      input1: ${{ service_name }}
+      input2: ${{ short_sha }}
+      input3: ${{ github.head_ref }}
