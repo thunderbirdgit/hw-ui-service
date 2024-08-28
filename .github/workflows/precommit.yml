@@ -9,23 +9,7 @@ on:
 
 jobs:    
   determine-branch:
-    runs-on: ubuntu-latest
-    outputs:
-      branch_name: ${{ steps.get_branch.outputs.branch_name }}
-    steps:
-      - name: Get Branch Name
-        id: get_branch
-        run: |
-          if [ "${{ github.event_name }}" == "push" ]; then
-            branch_name=${GITHUB_REF#refs/heads/}
-            echo "branch_name=$branch_name" >> $GITHUB_OUTPUT
-          elif [ "${{ github.event_name }}" == "pull_request" ]; then
-            echo "branch_name=${{ github.head_ref }}" >> $GITHUB_OUTPUT          
-          fi
-
-      - name: Print Final Branch Name
-        run: |          
-          echo "Branch Name: ${{ steps.get_branch.outputs.branch_name }}"
+    uses: thunderbirdgit/gh-actions-wf/.github/workflows/get-branch-name.yml@main
           
   get-short-sha:
     runs-on: ubuntu-latest
