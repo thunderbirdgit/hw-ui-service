@@ -24,6 +24,6 @@ jobs:
     needs: get-short-sha
     uses: thunderbirdgit/gh-actions-wf/.github/workflows/nodejs-build.yml@main
     with:
-      input1: "${{ env.service_name }}"
-      input2: "${{ jobs.get-short-sha.outputs.short_sha }}"
-      input3: "${{ github.head_ref }}"
+      service_name: "${{ env.service_name }}"
+      short_sha: "${{ jobs.get-short-sha.outputs.short_sha }}"
+      branch_name: "${{ github.head_ref }}"
