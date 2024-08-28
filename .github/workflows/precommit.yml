@@ -10,44 +10,11 @@ on:
 jobs:
   # Determine the branch name to append to docker image
   determine-branch:
-    runs-on: ubuntu-latest
-    outputs:
-      branch_name: ${{ steps.get_branch.outputs.branch_name }}
-    steps:
-      - name: Get Branch Name
-        id: get_branch
-        run: |
-          if [ "${{ github.event_name }}" == "push" ]; then
-            branch_name=${GITHUB_REF#refs/heads/}
-            echo "branch_name=$branch_name" >> $GITHUB_OUTPUT
-          elif [ "${{ github.event_name }}" == "pull_request" ]; then
-            echo "branch_name=${{ github.head_ref }}" >> $GITHUB_OUTPUT          
-          fi
-
-      - name: Print Final Branch Name
-        run: |          
-          echo "Branch Name: ${{ steps.get_branch.outputs.branch_name }}"
+    uses: thunderbirdgit/gh-actions-wf/.github/workflows/get-branch-name.yml@main
   
   # Get the short SHA to append to docker image
   get-short-sha:
-    runs-on: ubuntu-latest
-    outputs:
-      short_sha: ${{ steps.get_sha.outputs.short_sha }}
-    steps:
-      - name: Show Short Git SHA
-        id: get_sha
-        run: | 
-          if [ "${{ github.event_name }}" == "push" ]; then
-            echo "short_sha=$(echo ${{ github.sha }} | cut -c1-7)" >> $GITHUB_OUTPUT
-          elif [ "${{ github.event_name }}" == "pull_request" ]; then
-            echo "short_sha=$(echo ${{ github.event.pull_request.head.sha }} | cut -c1-7)" >> $GITHUB_OUTPUT
-          else
-            echo "short_sha=$(echo ${{ github.sha }} | cut -c1-7)" >> $GITHUB_OUTPUT
-          fi
-        
-      - name: Print Short Git SHA
-        run: |          
-          echo "Git SHA: ${{ steps.get_sha.outputs.short_sha }}"
+    uses: thunderbirdgit/gh-actions-wf/.github/workflows/get-short-sha.yml@main
         
   build:
     strategy:
@@ -60,4 +27,4 @@ jobs:
     with:
       service_name: ${{matrix.service_name}}      
       short_sha: ${{ needs.get-short-sha.outputs.short_sha }}
-      branch_name: ${{ needs.determine-branch.outputs.branch_name }}
+      branch_name: ${{ needs.determine-branch.outputs.branch_name }}      
