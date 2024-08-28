@@ -6,11 +6,15 @@ on:
       - '**'
   pull_request:
     branches: [ "main" ]
-
-env:
-  service_name: hw-ui-service
   
 jobs:
+  set-service-names:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Set Service Names
+        id: set_service_names
+        run: echo "service_name=hw-ui-service" >> $GITHUB_ENV
+    
   determine-branch:
     runs-on: ubuntu-latest
     outputs:
@@ -47,7 +51,7 @@ jobs:
     needs: [get-short-sha, determine-branch]
     uses: thunderbirdgit/gh-actions-wf/.github/workflows/nodejs-build.yml@main
     with:
-      service_name: ${{ env.service_name }}
+      service_name: ${{ service_name }}
       #service_name: "hw-ui-service"
       short_sha: ${{ needs.get-short-sha.outputs.short_sha }}
       branch_name: ${{ needs.determine-branch.outputs.branch_name }}
