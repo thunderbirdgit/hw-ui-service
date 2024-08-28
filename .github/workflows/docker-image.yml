@@ -1,0 +1,18 @@
+name: Docker Image CI
+
+on:
+  push:
+    branches: [ "main", "precommit" ]
+  pull_request:
+    branches: [ "main" ]
+  
+jobs:
+  env:
+    SERVICE_1_APP_NAME: "hw-ui-service"
+  
+  build-service1:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+    - name: Build the Docker image
+      run: docker build -t "${SERVICE_1_APP_NAME}-${GITHUB_SHA::7}-${github.ref}"
