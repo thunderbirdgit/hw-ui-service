@@ -10,7 +10,7 @@ jobs:
   env:
     SERVICE_1_APP_NAME: "hw-ui-service"
   
-  build-service1:
+  build:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v4
