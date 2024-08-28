@@ -30,14 +30,22 @@ jobs:
       - name: Print Short Git SHA
         run: |          
           echo "Git SHA: ${{ steps.get_sha.outputs.short_sha }}"
+  
+  validatevars:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Debug Outputs
+        run: |
+          echo "Branch Name: ${{ needs.get-branch-name.outputs.branch_name }}"
+          echo "Short SHA: ${{ needs.get-short-sha.outputs.short_sha }}"
         
   build:
     strategy:
       matrix:
         service_name: ["hw-ui-service", "hw-ui-service2"]
-    needs: [get-short-sha, determine-branch]
+    needs: [get-short-sha, determine-branch, validatevars]    
     uses: thunderbirdgit/gh-actions-wf/.github/workflows/nodejs-build.yml@main
     with:
       service_name: ${{matrix.service_name}}      
       short_sha: ${{ needs.get-short-sha.outputs.short_sha }}
-      branch_name: ${{ needs.determine-branch.outputs.branch_name }}
+      branch_name: ${{ needs.determine-branch.outputs.branch_name }}      
