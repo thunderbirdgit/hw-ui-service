@@ -22,7 +22,7 @@ jobs:
             # Extract the branch name
             branch_name=${GITHUB_REF#refs/heads/}
             echo "Branch Name: $branch_name"
-            echo "branch_name=$branch_name" >> $GITHUB_ENV
+            echo "branch_name=$branch_name" >> $GITHUB_OUTPUT
           elif [ "${{ github.event_name }}" == "pull_request" ]; then
             echo "Head Branch Name: ${{ github.head_ref }}"
             echo "head_branch_name=${{ github.head_ref }}" >> $GITHUB_OUTPUT
@@ -41,11 +41,15 @@ jobs:
         id: get_sha
         run: echo "short_sha=$(echo ${{ github.sha }} | cut -c1-7)" >> $GITHUB_OUTPUT
         
+      - name: Print Short Git SHA
+        run: |
+          echo "Git SHA: ${short_sha}"
+        
   build:
     needs: [get-short-sha, determine-branch]
     uses: thunderbirdgit/gh-actions-wf/.github/workflows/nodejs-build.yml@main
     with:
-      #service_name: "${{ env.service_name }}"
-      service_name: "hw-ui-service"      
+      service_name: ${{ env.service_name }}
+      #service_name: "hw-ui-service"
       short_sha: ${{ needs.get-short-sha.outputs.short_sha }}
       branch_name: ${{ needs.determine-branch.outputs.branch_name }}
