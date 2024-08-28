@@ -25,7 +25,7 @@ jobs:
             echo "branch_name=$branch_name" >> $GITHUB_ENV
           elif [ "${{ github.event_name }}" == "pull_request" ]; then
             echo "Head Branch Name: ${{ github.head_ref }}"
-            echo "head_branch_name=${{ github.head_ref }}" >> $GITHUB_ENV
+            echo "head_branch_name=${{ github.head_ref }}" >> $GITHUB_OUTPUT
           fi
 
       - name: Print Final Branch Name
@@ -39,7 +39,7 @@ jobs:
     steps:
       - name: Show Short Git SHA
         id: get_sha
-        run: echo "short_sha=$(echo ${{ github.sha }} | cut -c1-7)" >> $GITHUB_ENV
+        run: echo "short_sha=$(echo ${{ github.sha }} | cut -c1-7)" >> $GITHUB_OUTPUT
         
   build:
     needs: [get-short-sha, determine-branch]
