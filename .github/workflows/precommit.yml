@@ -24,8 +24,8 @@ jobs:
           fi
 
       - name: Print Final Branch Name
-        run: |
-          echo "Branch Name: ${branch_name}"
+        run: |          
+          echo "Branch Name: ${{ steps.get_branch.outputs.branch_name }}"
           
   get-short-sha:
     runs-on: ubuntu-latest
@@ -37,8 +37,8 @@ jobs:
         run: echo "short_sha=$(echo ${{ github.sha }} | cut -c1-7)" >> $GITHUB_OUTPUT
         
       - name: Print Short Git SHA
-        run: |
-          echo "Git SHA: ${short_sha}"
+        run: |          
+          echo "Git SHA: ${{ steps.get_sha.outputs.short_sha }}"
         
   build:
     strategy:
