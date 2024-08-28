@@ -8,8 +8,9 @@ on:
     branches: [ "main" ]
 
 env:
-  service_name: "hw-ui-service"
-    
+  service_name: hw-ui-service
+  short_sha: ${{ steps.get_short_sha.outputs.short_sha }}
+  
 jobs:
   get-short-sha:
     runs-on: ubuntu-latest
@@ -21,9 +22,9 @@ jobs:
         run: echo "short_sha=$(echo ${{ github.sha }} | cut -c1-7)" >> $GITHUB_ENV
         
   build:
-    needs: get-short-sha
+    needs: [get-short-sha]
     uses: thunderbirdgit/gh-actions-wf/.github/workflows/nodejs-build.yml@main
     with:
       service_name: "${{ env.service_name }}"
-      short_sha: "${{ jobs.get-short-sha.outputs.short_sha }}"
+      short_sha: "${{ needs.get-short-sha.outputs.short_sha }}"
       branch_name: "${{ github.head_ref }}"
