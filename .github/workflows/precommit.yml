@@ -6,6 +6,7 @@ on:
       - '**'
   pull_request:
     branches: [ "main" ]
+    types: [closed]
 
 jobs:    
   determine-branch:
@@ -20,7 +21,7 @@ jobs:
             branch_name=${GITHUB_REF#refs/heads/}
             echo "branch_name=$branch_name" >> $GITHUB_OUTPUT
           elif [ "${{ github.event_name }}" == "pull_request" ]; then
-            echo "branch_name=${{ github.head_ref }}" >> $GITHUB_OUTPUT
+            echo "branch_name=${{ github.head_ref }}" >> $GITHUB_OUTPUT          
           fi
 
       - name: Print Final Branch Name
@@ -39,6 +40,8 @@ jobs:
             echo "short_sha=$(echo ${{ github.sha }} | cut -c1-7)" >> $GITHUB_OUTPUT
           elif [ "${{ github.event_name }}" == "pull_request" ]; then
             echo "short_sha=$(echo ${{ github.event.pull_request.head.sha }} | cut -c1-7)" >> $GITHUB_OUTPUT
+          elif [ "${{ github.event.pull_request.merged }}" == true ]; then
+            echo "short_sha=$(echo ${{ github.sha }} | cut -c1-7)" >> $GITHUB_OUTPUT
           fi
         
       - name: Print Short Git SHA
