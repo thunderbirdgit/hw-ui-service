@@ -26,5 +26,5 @@ jobs:
     with:
       #service_name: "${{ env.service_name }}"
       service_name: "hw-ui-service"      
-      short_sha: "${{ needs.get-short-sha.outputs.short_sha }}"
-      branch_name: "${{ github.head_ref }}"
+      #short_sha: "${{ needs.get-short-sha.outputs.short_sha }}"
+      #branch_name: "${{ github.head_ref }}"
