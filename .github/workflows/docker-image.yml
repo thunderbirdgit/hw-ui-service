@@ -17,4 +17,4 @@ jobs:
     - name: Show Short Git SHA
       run: echo "short_sha=$(echo ${{ github.sha }} | cut -c1-7)" >> $GITHUB_ENV
     - name: Build the Docker image
-      run: docker build -t "${{ env.SERVICE_1_APP_NAME }}-${{ env.short_sha }}-${{ github.ref_name }}"
+      run: docker build -t "${{ env.SERVICE_1_APP_NAME }}-${{ env.short_sha }}-${{ github.ref_name }}" .
