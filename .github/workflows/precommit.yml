@@ -7,7 +7,8 @@ on:
   pull_request:
     branches: [ "main" ]
 
-jobs:    
+jobs:
+  # Determine the branch name to append to docker image
   determine-branch:
     runs-on: ubuntu-latest
     outputs:
@@ -26,7 +27,8 @@ jobs:
       - name: Print Final Branch Name
         run: |          
           echo "Branch Name: ${{ steps.get_branch.outputs.branch_name }}"
-          
+  
+  # Get the short SHA to append to docker image
   get-short-sha:
     runs-on: ubuntu-latest
     outputs:
@@ -50,8 +52,10 @@ jobs:
   build:
     strategy:
       matrix:
+        # Build multiple images for each change
         service_name: ["hw-ui-service", "hw-ui-service2"]
     needs: [get-short-sha, determine-branch]
+    # Use reusuable workflow and build multiple nodejs services
     uses: thunderbirdgit/gh-actions-wf/.github/workflows/nodejs-build.yml@main
     with:
       service_name: ${{matrix.service_name}}      
