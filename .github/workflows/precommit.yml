@@ -12,38 +12,13 @@ jobs:
     uses: thunderbirdgit/gh-actions-wf/.github/workflows/get-branch-name.yml@main
           
   get-short-sha:
-    runs-on: ubuntu-latest
-    outputs:
-      short_sha: ${{ steps.get_sha.outputs.short_sha }}
-    steps:
-      - name: Show Short Git SHA
-        id: get_sha
-        run: | 
-          if [ "${{ github.event_name }}" == "push" ]; then
-            echo "short_sha=$(echo ${{ github.sha }} | cut -c1-7)" >> $GITHUB_OUTPUT
-          elif [ "${{ github.event_name }}" == "pull_request" ]; then
-            echo "short_sha=$(echo ${{ github.event.pull_request.head.sha }} | cut -c1-7)" >> $GITHUB_OUTPUT
-          else
-            echo "short_sha=$(echo ${{ github.sha }} | cut -c1-7)" >> $GITHUB_OUTPUT
-          fi
-        
-      - name: Print Short Git SHA
-        run: |          
-          echo "Git SHA: ${{ steps.get_sha.outputs.short_sha }}"
-  
-  validatevars:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Debug Outputs
-        run: |
-          echo "Branch Name: ${{ needs.get-branch-name.outputs.branch_name }}"
-          echo "Short SHA: ${{ needs.get-short-sha.outputs.short_sha }}"
+    uses: thunderbirdgit/gh-actions-wf/.github/workflows/get-short-sha.yml@main    
         
   build:
     strategy:
       matrix:
         service_name: ["hw-ui-service", "hw-ui-service2"]
-    needs: [get-short-sha, determine-branch, validatevars]    
+    needs: [get-short-sha, determine-branch]    
     uses: thunderbirdgit/gh-actions-wf/.github/workflows/nodejs-build.yml@main
     with:
       service_name: ${{matrix.service_name}}      
