@@ -49,7 +49,7 @@ jobs:
     needs: [get-short-sha, determine-branch]
     uses: thunderbirdgit/gh-actions-wf/.github/workflows/nodejs-build.yml@main
     with:
-      service_name: ${{ env.service_name }}
-      #service_name: "hw-ui-service"
+      #service_name: ${{ env.service_name }}
+      service_name: "hw-ui-service"
       short_sha: ${{ needs.get-short-sha.outputs.short_sha }}
       branch_name: ${{ needs.determine-branch.outputs.branch_name }}
