@@ -13,8 +13,11 @@ env:
 jobs:
   get-short-sha:
     runs-on: ubuntu-latest
+    outputs:
+      short_sha: ${{ steps.get_sha.outputs.short_sha }}
     steps:
       - name: Show Short Git SHA
+        id: get_sha
         run: echo "short_sha=$(echo ${{ github.sha }} | cut -c1-7)" >> $GITHUB_ENV
         
   build:
@@ -22,5 +25,5 @@ jobs:
     uses: thunderbirdgit/gh-actions-wf/.github/workflows/nodejs-build.yml@main
     with:
       input1: "${{ env.service_name }}"
-      input2: "${{ env.short_sha }}"
+      input2: "${{ jobs.get-short-sha.outputs.short_sha }}"
       input3: "${{ github.head_ref }}"
