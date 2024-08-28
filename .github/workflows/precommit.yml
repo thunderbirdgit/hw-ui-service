@@ -18,7 +18,7 @@ jobs:
         
   build:
     needs: get-short-sha
-    uses: thunderbirdgit/gh-actions-wf/ci/nodejs-build.yaml@main
+    uses: thunderbirdgit/gh-actions-wf/.github/workflows/ci/node-js-build.yml@main
     with:
       input1: ${{ service_name }}
       input2: ${{ short_sha }}
