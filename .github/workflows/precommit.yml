@@ -34,7 +34,12 @@ jobs:
     steps:
       - name: Show Short Git SHA
         id: get_sha
-        run: echo "short_sha=$(echo ${{ github.sha }} | cut -c1-7)" >> $GITHUB_OUTPUT
+        run: | 
+          if [ "${{ github.event_name }}" == "push" ]; then
+            echo "short_sha=$(echo ${{ github.sha }} | cut -c1-7)" >> $GITHUB_OUTPUT
+          elif [ "${{ github.event_name }}" == "pull_request" ]; then
+            echo "short_sha=$(echo ${{ github.event.pull_request.head.sha }} | cut -c1-7)" >> $GITHUB_OUTPUT
+          fi
         
       - name: Print Short Git SHA
         run: |          
