@@ -21,16 +21,16 @@ jobs:
             echo "Branch Name: ${{ github.ref }}"
             # Extract the branch name
             branch_name=${GITHUB_REF#refs/heads/}
-            echo "Branch Name: $branch_name"
+            echo "Base Branch Name: $branch_name"
             echo "branch_name=$branch_name" >> $GITHUB_OUTPUT
           elif [ "${{ github.event_name }}" == "pull_request" ]; then
             echo "Head Branch Name: ${{ github.head_ref }}"
-            echo "head_branch_name=${{ github.head_ref }}" >> $GITHUB_OUTPUT
+            echo "branch_name=${{ github.head_ref }}" >> $GITHUB_OUTPUT
           fi
 
       - name: Print Final Branch Name
         run: |
-          echo "Branch Name: ${branch_name:-$head_branch_name}"
+          echo "Branch Name: ${branch_name}"
           
   get-short-sha:
     runs-on: ubuntu-latest
