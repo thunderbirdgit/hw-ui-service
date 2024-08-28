@@ -14,6 +14,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v4
+    - name: Show Short Git SHA
+      run: echo ${GITHUB_SHA::7}
     - name: Build the Docker image
       run: docker build -t "${{ env.SERVICE_1_APP_NAME }}-${{ github.sha::7 }}-${{ github.ref_name }}"  .
-      
