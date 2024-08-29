@@ -6,6 +6,8 @@ on:
       - '**'
   pull_request:
     branches: [ "main" ]
+  repository_dispatch:
+    types: [ci-unittest]
 
 jobs:
   # Determine the branch name to append to docker image
