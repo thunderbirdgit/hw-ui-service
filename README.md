@@ -1,4 +1,4 @@
-# Hello-World UI Service
+# Hello-World UI Service on PostGres DB
 
 ## Project Description
 #### Overview
